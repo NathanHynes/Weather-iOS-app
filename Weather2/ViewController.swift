@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import NVActivityIndicatorView
+import CoreLocation
 
 class ViewController: UIViewController {
 
