@@ -82,8 +82,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "EEEE"
                 self.dayLabel.text = dateFormatter.string(from: date)
+                
+                let suffix = iconName.suffix(1)
+                if (suffix == "n") {
+                    self.setGreyGradientBackground()
+                }else{
+                    self.setBlueGradientBackground()
+                }
             }
         }
+        self.locationManager.stopUpdatingLocation()
     }
     
     func setBlueGradientBackground(){
