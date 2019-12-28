@@ -6,13 +6,14 @@
 //  Copyright © 2019 Nathan Hynes. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
 import NVActivityIndicatorView
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
     
     @IBOutlet weak var locationLabel: UILabel!
@@ -71,6 +72,16 @@ class ViewController: UIViewController {
                 let jsonWeather = jsonResponse["weather"].array![0]
                 let jsonTemp = jsonResponse["main"]
                 let iconName = jsonWeather["icon"].stringValue
+                
+                self.locationLabel.text = jsonResponse["name"].stringValue
+                self.conditionImageView.image = UIImage(named: iconName)
+                self.conditionLabel.text = jsonWeather["main"].stringValue
+                self.temperatureLabel.text = "\(Int(round(jsonTemp["temp"].doubleValue)))"
+                
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "EEEE"
+                self.dayLabel.text = dateFormatter.string(from: date)
             }
         }
     }
