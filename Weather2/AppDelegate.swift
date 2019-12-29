@@ -16,7 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        self.extendSplashScreenPresentation()
+        window = UIWindow(frame: UIScreen.main.bounds)
+           window?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+           window?.makeKeyAndVisible()
+
+           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 7) {
+               self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+           }
         return true
         
     }
@@ -35,28 +41,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    private func extendSplashScreenPresentation(){
-        // Get a refernce to LaunchScreen.storyboard
-        let launchStoryBoard = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
-        // Get the splash screen controller
-        let splashController = launchStoryBoard.instantiateViewController(withIdentifier: "splashController")
-        // Assign it to rootViewController
-        self.window?.rootViewController = splashController
-        self.window?.makeKeyAndVisible()
-        // Setup a timer to remove it after n seconds
-        Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(dismissSplashController), userInfo: nil, repeats: false)
-    }
-    
-    @objc private func dismissSplashController() {
-        // Get a refernce to Main.storyboard
-        let mainStoryBoard = UIStoryboard.init(name: "Main", bundle: nil)
-        // Get initial viewController
-        let initController = mainStoryBoard.instantiateViewController(withIdentifier: "initController")
-        // Assign it to rootViewController
-        self.window?.rootViewController = initController
-        self.window?.makeKeyAndVisible()
-    }
-
-
 }
 
